@@ -1,8 +1,0 @@
-C:\Users\minke\source\repos\SDL2project\obj\Debug\SDL2project.csproj.AssemblyReference.cache
-C:\Users\minke\source\repos\SDL2project\obj\Debug\SDL2project.csproj.SuggestedBindingRedirects.cache
-C:\Users\minke\source\repos\SDL2project\obj\Debug\SDL2project.csproj.CoreCompileInputs.cache
-C:\Users\minke\source\repos\SDL2project\bin\Debug\SDL2project.exe.config
-C:\Users\minke\source\repos\SDL2project\bin\Debug\SDL2project.exe
-C:\Users\minke\source\repos\SDL2project\bin\Debug\SDL2project.pdb
-C:\Users\minke\source\repos\SDL2project\obj\Debug\SDL2project.exe
-C:\Users\minke\source\repos\SDL2project\obj\Debug\SDL2project.pdb
