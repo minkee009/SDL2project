@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SDL2;
 namespace SDL2project
 {
     class Input
@@ -21,6 +22,15 @@ namespace SDL2project
         public static bool GetKeyDown(ConsoleKey checkKey)
         {
             if (checkKey == key)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public static bool GetKeyDown(SDL.SDL_Keycode keycode)
+        {
+            if (Engine.GetInstance().myEvent.key.keysym.sym == keycode)
             {
                 return true;
             }
