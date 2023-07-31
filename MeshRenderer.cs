@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace SDL2project
 {
@@ -14,9 +16,21 @@ namespace SDL2project
         public byte B;
         public byte A;
 
+        //SDL.SDL_Color colorKey;
+        public bool isSprite;
+
+        public string textureName;
+        IntPtr mySurface;
+        IntPtr myTexture;
+
         public int SpirteSize = 40;
 
         protected MeshFilter meshFilter;
+
+        protected int index = 0;
+
+        double animationTimer = 0;
+
         public MeshRenderer()
         {
 
@@ -27,6 +41,37 @@ namespace SDL2project
             G = inG;
             B = inB;
             A = inA;
+        }
+        public MeshRenderer(byte inR, byte inG, byte inB, byte inA, string inTextureName, bool inIsSprite = false)
+        {
+            R = inR;
+            G = inG;
+            B = inB;
+            A = inA;
+            textureName = inTextureName;
+            isSprite = inIsSprite;
+
+            //릴리즈할 땐 사용하지않기 
+            //mySurface = SDL.SDL_LoadBMP("Data/" + textureName); 로 변경
+            string projectFolder = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+
+            unsafe
+            { 
+                mySurface = SDL.SDL_LoadBMP(projectFolder + "/Data/" + textureName);
+                SDL.SDL_Surface* surface = (SDL.SDL_Surface*)mySurface;
+                if (!isSprite)
+                {
+                    SDL.SDL_SetColorKey(mySurface, 1,
+                        SDL.SDL_MapRGB(surface->format, 255, 255, 255));
+                }
+                else
+                {
+                    SDL.SDL_SetColorKey(mySurface, 1,
+                        SDL.SDL_MapRGB(surface->format, 255, 0, 255));
+                }
+                
+                myTexture = SDL.SDL_CreateTextureFromSurface(Engine.GetInstance().myRenderer, mySurface);
+            }
         }
         ~MeshRenderer() { }
 
@@ -46,14 +91,53 @@ namespace SDL2project
             //Console.SetCursorPosition(transform.x, transform.y);
             //Console.WriteLine(meshFilter.Shape);
 
-            //Fill Rect
-            SDL.SDL_Rect myRect = new SDL.SDL_Rect();
-            myRect.x = transform.x * SpirteSize;
-            myRect.y = transform.y * SpirteSize;
-            myRect.w = SpirteSize;
-            myRect.h = SpirteSize;
-            SDL.SDL_SetRenderDrawColor(Engine.GetInstance().myRenderer, R, G, B, A);
-            SDL.SDL_RenderFillRect(Engine.GetInstance().myRenderer, ref myRect);
+            unsafe
+            {
+                SDL.SDL_Rect source = new SDL.SDL_Rect();
+                SDL.SDL_Surface* surface = (SDL.SDL_Surface*)mySurface;
+
+                if (!isSprite)
+                {
+                    source.x = 0;
+                    source.y = 0;
+                    source.w = surface->w;
+                    source.h = surface->h;
+                }
+                else
+                {
+                    int sizeX = surface->w / 5;
+                    int sizeY = surface->h / 5;
+
+                    source.x = index * sizeX;
+                    source.y = 3 * sizeY;
+                    source.w = sizeX;
+                    source.h = sizeY;
+
+                    animationTimer += Engine.GetInstance().deltaTime;
+                  
+                    if (animationTimer > 0.1)
+                    {
+                        index++;
+                        index %= 5;
+                        animationTimer = 0;
+                    }
+                    
+                }
+
+                SDL.SDL_Rect destination = new SDL.SDL_Rect();
+                destination.x = transform.x * SpirteSize;
+                destination.y = transform.y * SpirteSize;
+                destination.w = SpirteSize;
+                destination.h = SpirteSize;
+
+                SDL.SDL_RenderCopy(Engine.GetInstance().myRenderer,
+                    myTexture,
+                    ref source,
+                    ref destination);
+            }
+
+            //Animation
+
         }
     }
 }

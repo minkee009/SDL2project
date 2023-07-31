@@ -28,6 +28,7 @@
 
 #region Using Statements
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endregion
 
@@ -2541,9 +2542,19 @@ namespace SDL2
 			public byte g;
 			public byte b;
 			public byte a;
-		}
 
-		[StructLayout(LayoutKind.Sequential)]
+            public SDL_Color(byte inR,byte inG, byte inB, byte inA)
+			{
+				r = inR;
+				g = inG;
+				b = inB;
+				a = inA;
+            }
+        }
+
+        
+
+        [StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Palette
 		{
 			public int ncolors;

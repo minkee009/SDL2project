@@ -97,7 +97,7 @@ namespace SDL2project
                 Last = Now;
                 Now = SDL.SDL_GetPerformanceCounter();
 
-                deltaTime = (double)((Now - Last) / (double)SDL.SDL_GetPerformanceFrequency());
+                deltaTime = (Now - Last) / (double)SDL.SDL_GetPerformanceFrequency();
 
                 //Clear Screen
                 SDL.SDL_SetRenderDrawColor(myRenderer, 0, 0, 0, 0);

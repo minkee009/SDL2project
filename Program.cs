@@ -81,7 +81,7 @@ namespace SDL2project
                         floor.transform.x = x;
                         floor.transform.y = y;
                         floor.AddComponent(new MeshFilter(' '));
-                        floor.AddComponent(new MeshRenderer(255, 255, 255, 0));
+                        floor.AddComponent(new MeshRenderer(255, 255, 255, 0, "floor.bmp"));
                         myEngine.Instanciate(floor);
 
                         GameObject wall = new GameObject();
@@ -89,7 +89,7 @@ namespace SDL2project
                         wall.transform.x = x;
                         wall.transform.y = y;
                         wall.AddComponent(new MeshFilter('*'));
-                        wall.AddComponent(new MeshRenderer(0, 0, 255, 0));
+                        wall.AddComponent(new MeshRenderer(0, 0, 255, 0, "wall.bmp"));
                         wall.AddComponent(new Collider());
                         myEngine.Instanciate(wall);
                     }
@@ -100,7 +100,7 @@ namespace SDL2project
                         floor.transform.x = x;
                         floor.transform.y = y;
                         floor.AddComponent(new MeshFilter(' '));
-                        floor.AddComponent(new MeshRenderer(255, 255, 255, 0));
+                        floor.AddComponent(new MeshRenderer(255, 255, 255, 0, "floor.bmp"));
                         myEngine.Instanciate(floor);
                     }
                 }
@@ -112,14 +112,14 @@ namespace SDL2project
             goal.transform.x = 8;
             goal.transform.y = 8;
             goal.AddComponent(new MeshFilter('G'));
-            goal.AddComponent(new MeshRenderer(0, 255, 255, 0));
+            goal.AddComponent(new MeshRenderer(0, 255, 255, 0, "coin.bmp"));
             goal.AddComponent(new GoalIn());
             myEngine.Instanciate(goal);
 
             GameObject monster = new GameObject();
             monster.name = "monster";
             monster.AddComponent(new MeshFilter('M'));
-            monster.AddComponent(new MeshRenderer(0, 255, 0, 255));
+            monster.AddComponent(new MeshRenderer(0, 255, 0, 255, "slime.bmp"));
             Transform[] patrolPoints = new Transform[3];
             patrolPoints[0] = new Transform();
             patrolPoints[0].x = 6;
@@ -140,7 +140,7 @@ namespace SDL2project
             player.transform.x = 1;
             player.transform.y = 1;
             player.AddComponent(new MeshFilter('P'));
-            player.AddComponent(new MeshRenderer(255, 0, 0, 0));
+            player.AddComponent(new MeshRenderer(255, 0, 0, 0, "test.bmp",true));
             player.AddComponent(new PlayerController());
             myEngine.Instanciate(player);
 
