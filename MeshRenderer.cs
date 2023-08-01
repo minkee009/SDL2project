@@ -27,7 +27,8 @@ namespace SDL2project
 
         protected MeshFilter meshFilter;
 
-        protected int index = 0;
+        public int indexX = 0;
+        public int indexY = 3;
 
         double animationTimer = 0;
 
@@ -108,8 +109,8 @@ namespace SDL2project
                     int sizeX = surface->w / 5;
                     int sizeY = surface->h / 5;
 
-                    source.x = index * sizeX;
-                    source.y = 3 * sizeY;
+                    source.x = indexX * sizeX;
+                    source.y = indexY * sizeY;
                     source.w = sizeX;
                     source.h = sizeY;
 
@@ -117,8 +118,9 @@ namespace SDL2project
                   
                     if (animationTimer > 0.1)
                     {
-                        index++;
-                        index %= 5;
+                        indexX++;
+                        indexX %= 5;
+
                         animationTimer = 0;
                     }
                     
